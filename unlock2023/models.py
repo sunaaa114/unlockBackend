@@ -1,4 +1,6 @@
+
 from django.db import models
+from accounts.models import *
 
 STATUS_CHOICES = [
         ('대인관계', '대인관계'),
@@ -21,19 +23,11 @@ TIME_CHOICES = [
         ('17:00', '9'),
         ('18:00', '10')
     ]
-class User(models.Model):
-    id = models.IntegerField(primary_key=True)
-
-class Counselor(models.Model):
-    user_id = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
-
-class Counselee(models.Model):
-    user_id = models.OneToOneField(User, on_delete=models.CASCADE, unique=True)
 
 
 class Reservation(models.Model):
-    Counselor_id = models.ForeignKey(Counselor, on_delete=models.CASCADE, to_field = 'user_id')
-    Counselee_id = models.ForeignKey(Counselee, on_delete=models.CASCADE, to_field = 'user_id')
+    counselor = models.ForeignKey(Counselor, on_delete=models.CASCADE, db_column='counselor_id')
+    counselee = models.ForeignKey(Counselee, on_delete=models.CASCADE, db_column='counselee_id')
     date = models.DateField()
     time = models.CharField(max_length=10, choices=TIME_CHOICES)
     type = models.CharField(max_length=10, choices=STATUS_CHOICES)

@@ -1,17 +1,12 @@
 from rest_framework import serializers
-from .models import Counselor, Counselee, Reservation
 
-class CounselorSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Counselor
-        fields = ['user_id1']
+from accounts.serializers import CounselorSerializer, CounseleeSerializer
+from .models import Reservation
 
-class CounseleeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Counselee
-        fields = ['user_id2']
 
 class ReservationSerializer(serializers.ModelSerializer):
+    #counselor_id = CounselorSerializer(read_only=True)
+    #counselee_id = CounseleeSerializer(read_only=True)
     class Meta:
         model = Reservation
-        fields = ['Counselor_id', 'Counselee_id', 'date', 'time', 'type']
+        fields = ['counselor_id', 'counselee_id', 'date', 'time', 'type']
